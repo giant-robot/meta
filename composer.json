@@ -1,0 +1,8 @@
+{
+  "name": "giant-robot/meta",
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {"GiantRobot\\Meta\\": "src/GiantRobot/Meta/"},
+    "files": ["src/GiantRobot/Meta/hooks.php"]
+  }
+}

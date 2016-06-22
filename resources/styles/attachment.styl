@@ -1,0 +1,68 @@
+.gnt-meta-att
+
+    &__add
+        &:before
+            content "\f317"
+            font-family Dashicons
+            padding-right 0.5em
+            vertical-align top
+
+    &__remove
+        position absolute
+        right -1px
+        top -1px
+        width 28px
+        height 28px
+        line-height 28px
+        background black
+        border none
+        box-shadow none
+        text-align center
+        text-decoration none
+        color white
+
+        &:before
+            content "\f335"
+            font-family Dashicons
+
+        &:hover
+            background #00a0d2
+            color white
+
+    &__selection
+        display: inline-block
+        position: relative
+        clearfix()
+        border: 1px solid #DDD
+
+        &[data-kind="application"]
+            width: 100%
+
+        &[data-kind="image"]
+            line-height: 0;
+
+    &__thumbnail
+        display inline-block
+
+        [data-kind="application"] &
+            float: left
+            margin: 0 1em 0 0
+            padding: 0.5em 1em
+            background: #F7F7F7
+            border-right: 1px solid #DDD
+
+        img
+            display: block
+
+    &__info
+        [data-kind="image"] &
+            display: none;
+
+        [data-kind="application"] &
+            line-height: 1.45em
+            padding-top: 0.75em
+
+    .proto &
+        .add,
+        .image
+            display none

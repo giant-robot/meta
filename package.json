@@ -1,0 +1,16 @@
+{
+  "name": "giant-meta",
+  "devDependencies": {
+    "autoprefixer": "*",
+    "cssnano": "*",
+    "grunt": "*",
+    "grunt-contrib-stylus": "*",
+    "grunt-contrib-uglify": "*",
+    "grunt-contrib-watch": "*",
+    "grunt-newer": "*",
+    "grunt-postcss": "*",
+    "jeet": "*",
+    "nib": "*",
+    "stylus": "*"
+  }
+}

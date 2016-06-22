@@ -1,0 +1,48 @@
+.gnt-meta-gallery {
+
+    .gnt-meta-gallery__items {
+        margin-bottom 12px
+        box-shadow inset 0 0 2px rgba(0, 0, 0, 0.1)
+        overflow hidden
+    }
+
+    .gnt-meta-gallery__item {
+        float left
+        margin 12px 0 12px 12px
+        background rgba(255, 255, 255, 0.5)
+        line-height 0
+        position relative
+        cursor hand
+
+        &-handle {
+            display none
+        }
+
+        &-remove {
+            position absolute
+            top 0
+            right 0
+            display block
+            float: right
+            width 22px
+            height 22px
+            line-height 23px
+            background black
+            border-width 0
+            border-radius 0
+            color white
+            cursor pointer
+            font-family Dashicons
+            font-size 14px
+            text-align center
+
+            &:before {
+                content "\f158"
+            }
+
+            &:hover {
+                background #00a0d2
+            }
+        }
+    }
+}

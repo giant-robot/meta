@@ -1,0 +1,7 @@
+{
+  "name": "giant-meta",
+  "private": true,
+  "devDependencies": {
+    "selectize": "^0.12.1"
+  }
+}
