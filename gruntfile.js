@@ -19,6 +19,7 @@ module.exports = function (grunt) {
                         'resources/scripts/fields.js',
                         'resources/scripts/attachment.js',
                         'resources/scripts/gallery.js',
+                        'resources/scripts/location.js',
                         'resources/scripts/relation.js',
                         'resources/scripts/repeater.js'
                     ]

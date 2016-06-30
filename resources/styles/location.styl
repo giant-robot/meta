@@ -1,0 +1,31 @@
+.gnt-meta-location {
+
+    &__canvas {
+        width: 100%;
+        height: 400px;
+        z-index: 0;
+        box-sizing: border-box;
+        border: 1px solid #DDD;
+
+        // WTF?: http://stackoverflow.com/questions/8879544/google-maps-zoom-control
+        img {
+            max-width: none;
+        }
+
+        // Fix unexpected Gmaps info-window scrollbars.
+        .location-link {
+            display: block;
+            line-height: 1.6;
+            text-align: center;
+            overflow: hidden;
+            white-space: nowrap;
+            font-family: Helvetica, Arial, sans-serif;
+        }
+
+        // Style the auto-complete input box.
+        input[type="text"] {
+            margin: 0;
+            padding: 0.5em;
+        }
+    }
+}
