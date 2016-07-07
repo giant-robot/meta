@@ -28,6 +28,7 @@
     </template>
 
     <div class="gnt-meta-repeater__rows">
+        <input type="hidden" name="giant_meta[<?= esc_attr($id) ?>]" value="">
         <?php foreach ($values as $row_id => $row_values) : ?>
             <div class="gnt-meta-repeater__row">
                 <div class="gnt-meta-repeater__row-handle"></div>

@@ -24,7 +24,7 @@ class Repeater extends Field
     {
         if (! $values)
         {
-            return null;
+            return '';
         }
 
         /* @var Field[] $fields */
