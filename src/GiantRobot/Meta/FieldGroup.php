@@ -39,7 +39,7 @@ abstract class FieldGroup
     /**
      * A tuple array of Field implementations.
      *
-     * @var array
+     * @var \GiantRobot\Meta\Fields\Field[]
      */
     protected $fields;
 
