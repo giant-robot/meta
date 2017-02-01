@@ -7,8 +7,10 @@ add_action('wp_ajax_giant_find_posts', function () {
     unset($post_types['attachment']);
 
     $s = wp_unslash($_POST['ps']);
+    $post_type = $_POST['filter'] ? explode(',', $_POST['filter']) : 'any';
+
     $args = array(
-        'post_type'      => array_keys($post_types),
+        'post_type'      => $post_type,
         'post_status'    => 'any',
         'posts_per_page' => 50,
     );

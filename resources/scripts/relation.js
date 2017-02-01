@@ -41,6 +41,7 @@ GiantRobot.meta.relation = {
                         data: {
                             ps: query,
                             action: 'giant_find_posts',
+                            filter: $instance.data('filter'),
                             _wpnonce: $instance.data('token')
                         },
                         error: function() {

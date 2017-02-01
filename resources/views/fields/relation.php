@@ -5,9 +5,12 @@
  * @var string $id
  * @var string $name
  * @var array  $values
+ * @var string $filter
+ * @var string $token
+ * @var string $types
  */
 ?>
-<div class="gnt-meta-relation" data-token="<?php echo wp_create_nonce('giant|find|posts') ?>">
+<div class="gnt-meta-relation" data-token="<?php echo esc_attr($token) ?>" data-filter="<?php echo esc_attr($filter) ?>">
     <input type="hidden" name="<?php echo esc_attr($name) ?>" value="" />
     <select id="<?php echo esc_attr($id) ?>" name="<?php echo esc_attr($name) ?>">
         <?php foreach ($values as $id) : ?>

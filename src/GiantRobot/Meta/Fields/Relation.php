@@ -45,8 +45,12 @@ class Relation extends Field
             $values = array($value);
         }
 
+        $filter = $this->options('post_type', 'any');
+
         return [
-            'values' => $values
+            'values' => $values,
+            'filter' => is_array($filter) ? implode(',', $filter) : $filter,
+            'token' => wp_create_nonce('giant|find|posts')
         ];
     }
 }
