@@ -31,6 +31,7 @@ GiantRobot.meta.datetime = {
 
             $input.datetimepicker({
                 format: $input.data('save-format'),
+                defaultDate: new Date(),
                 datepicker: $input.data('datepicker'),
                 timepicker: $input.data('timepicker'),
                 closeOnDateSelect: ! $input.data('timepicker'),

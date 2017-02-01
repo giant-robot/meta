@@ -11,10 +11,10 @@
  * @var string $show_timepicker
  */
 ?>
-<div class="gnt-meta-datetime js-gnt-datetime" style="position: relative;">
+<div class="gnt-meta-datetime js-gnt-datetime">
 
     <span class="js-gnt-datetime__display">
-        <?php echo esc_html(date($display_format, strtotime($value))) ?>
+        <?php echo $value ? esc_html(date($display_format, strtotime($value))) : '' ?>
     </span>
     <i class="dashicons dashicons-calendar js-gnt-datetime__pick"></i>
 
@@ -26,6 +26,5 @@
            data-datepicker="<?php echo esc_attr($show_datepicker ? 'true' : 'false') ?>"
            data-timepicker="<?php echo esc_attr($show_timepicker ? 'true' : 'false') ?>"
            data-save-format="<?php echo esc_attr($save_format) ?>"
-           data-display-format="<?php echo esc_attr($display_format) ?>"
-           style="visibility: hidden;">
+           data-display-format="<?php echo esc_attr($display_format) ?>">
 </div>
