@@ -15,9 +15,11 @@ module.exports = function (grunt) {
             dist: {
                 files: {
                     'public/js/fields.js': [
+                        'resources/components/bower/datetimepicker/build/jquery.datetimepicker.full.min.js',
                         'resources/components/bower/selectize/dist/js/standalone/selectize.min.js',
                         'resources/scripts/fields.js',
                         'resources/scripts/attachment.js',
+                        'resources/scripts/datetime.js',
                         'resources/scripts/gallery.js',
                         'resources/scripts/location.js',
                         'resources/scripts/relation.js',
