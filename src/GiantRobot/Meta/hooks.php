@@ -1,10 +1,7 @@
 <?php
 add_action('wp_ajax_giant_find_posts', function () {
 
-    check_ajax_referer('giant|find|posts');
-
-    $post_types = get_post_types(array('public' => true), 'objects');
-    unset($post_types['attachment']);
+    check_admin_referer('giant|find|posts');
 
     $s = wp_unslash($_POST['ps']);
     $post_type = $_POST['filter'] ? explode(',', $_POST['filter']) : 'any';
