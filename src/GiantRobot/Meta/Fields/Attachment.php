@@ -34,11 +34,19 @@ class Attachment extends Field
      */
     protected function viewData($value = null)
     {
+        $defaults = array(
+            'kind'      => '',
+            'thumbnail' => '',
+            'title'     => '',
+            'filename'  => '',
+            'filesize'  => ''
+        );
+
         $attachment = get_post($value);
 
         if (! $attachment)
         {
-            return array();
+            return $defaults;
         }
 
         $file = get_attached_file($value);
