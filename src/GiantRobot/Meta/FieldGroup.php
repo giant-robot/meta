@@ -60,15 +60,13 @@ abstract class FieldGroup
     /**
      * FieldGroup constructor.
      *
-     * @param string $id
      * @param string $title
      * @param array  $locations
      * @param array  $fields
      * @param array  $options
      */
-    public function __construct($id, $title, array $locations, array $fields, array $options = [])
+    public function __construct($title, array $locations, array $fields, array $options = [])
     {
-        $this->id = $id;
         $this->title = $title;
         $this->locations = $locations;
         $this->options = $options;
@@ -78,6 +76,9 @@ abstract class FieldGroup
         {
             $this->addField($field);
         }
+
+        // Generate a unique id if one is not supplied with the options.
+        $this->id = $this->options('id', $this->getId());
 
         // Check for valid visibility constraint.
         $showWhen = $this->options('show_when');
@@ -324,5 +325,24 @@ abstract class FieldGroup
         }
 
         return $this->options;
+    }
+
+    /**
+     * Generate a unique id for the group.
+     *
+     * @return string
+     */
+    protected function getId()
+    {
+        if (isset($this->id))
+        {
+            return $this->id;
+        }
+
+        $fieldIds = array_map(function ($field) {
+            return $field->id;
+        }, $this->fields);
+
+        return hash('crc32', $this->title.implode('|', $fieldIds));
     }
 }
