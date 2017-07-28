@@ -51,7 +51,7 @@ class Attachment extends Field
 
         $file = get_attached_file($value);
         $bytes = filesize($file);
-        $size = $bytes > 1048576 ? round($bytes/1048576) . " MB" : round($bytes/1024) . " kB";
+        $size = $bytes > 1048576 ? round($bytes/1048576, 1) . " MB" : round($bytes/1024) . " kB";
         $thumb = wp_get_attachment_image_src($value, 'thumbnail', true);
 
         return [
