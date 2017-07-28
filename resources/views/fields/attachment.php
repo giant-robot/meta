@@ -3,6 +3,7 @@
  * Attachment Input Template
  *
  * @var string $id
+ * @var string $name
  * @var string $value
  * @var string $kind
  * @var string $thumbnail
