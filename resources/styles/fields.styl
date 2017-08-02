@@ -4,12 +4,20 @@
  */
 @import "nib"
 
-.giant-fields
+.giant-fields {
 
-    & > .giant-field
+    &--boxed {
+        background: #FFF;
+        border: 1px solid #e5e5e5;
+        box-shadow: 0 1px 1px rgba(0,0,0,.04);
+    }
+
+    & > .giant-field {
         margin 0 -12px
         padding 12px 12px 15px
         border-top 1px solid #EEE
+    }
+}
 
 @import "field"
 @import "attachment"

@@ -11,7 +11,7 @@
     <th>
         <label><?php echo esc_html(apply_filters('giant_meta_group_title', '')) ?></label>
     </th>
-    <td class="giant-fields">
+    <td class="giant-fields giant-fields--boxed">
         <input type="hidden" name="_giant_meta_tokens[<?php echo esc_attr($id) ?>]" value="<?php echo esc_attr($token) ?>">
         <?php echo $fields ?>
     </td>
