@@ -42,7 +42,7 @@ class AdminPage
         $this->id = spl_object_hash($this);
         $this->description = $this->options('description', '');
         $this->menuTitle = $this->options('menu_title', $this->title);
-        $this->slug = $this->options('menu_slug', sanitize_title($this->title));
+        $this->slug = $this->options('menu_slug', sanitize_title_with_dashes($this->title));
         $this->capability = $this->options('capability', 'manage_options');
         $this->icon = $this->options('icon', 'dashicons-admin-generic');
         $this->isRegistered = false;
