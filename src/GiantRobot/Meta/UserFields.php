@@ -51,7 +51,7 @@ class UserFields extends FieldGroup
             return;
         }
 
-        if ($this->locations && array_diff($user->roles, $this->locations))
+        if ($this->locations && ! array_intersect($user->roles, $this->locations))
         {
             return;
         }
