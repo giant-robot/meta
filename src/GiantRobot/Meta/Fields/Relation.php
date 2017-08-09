@@ -35,6 +35,7 @@ class Relation extends Field
     protected function viewData($value = null)
     {
         $values = $value;
+        $titles = array();
 
         if (! $value)
         {
@@ -45,12 +46,43 @@ class Relation extends Field
             $values = array($value);
         }
 
-        $filter = $this->options('post_type', 'any');
+        if ($filter = $this->options('user_role'))
+        {
+            $mode = 'user';
+
+            foreach ($values as $id)
+            {
+                $user = get_userdata($id);
+                $titles[$id] = $user ? $user->display_name : '';
+            }
+        }
+        elseif ($filter = $this->options('taxonomy'))
+        {
+            $mode = 'term';
+
+            foreach ($values as $id)
+            {
+                $term = get_term_by('term_taxonomy_id', $id);
+                $titles[$id] = $term ? $term->name : '';
+            }
+        }
+        else
+        {
+            $filter = $this->options('post_type', 'any');
+            $mode = 'post';
+
+            foreach ($values as $id)
+            {
+                $titles[$id] = get_the_title($id);
+            }
+        }
 
         return [
             'values' => $values,
+            'titles' => $titles,
+            'mode' => $mode,
             'filter' => is_array($filter) ? implode(',', $filter) : $filter,
-            'token' => wp_create_nonce('giant|find|posts')
+            'token' => wp_create_nonce('giant|meta|relate')
         ];
     }
 }

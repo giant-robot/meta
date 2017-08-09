@@ -23,14 +23,14 @@ GiantRobot.meta.relation = {
             var $instance = jQuery(this);
 
             $instance.find('select').selectize({
-                valueField: 'ID',
-                labelField: 'post_title',
-                searchField: 'post_title',
+                valueField: 'id',
+                labelField: 'title',
+                searchField: 'title',
                 create: false,
                 preload: 'focus',
                 render: {
                     option: function(item, escape) {
-                        return '<div>' + escape(item.post_title) + '</div>';
+                        return '<div>' + escape(item.title) + '</div>';
                     }
                 },
                 load: function(query, callback) {
@@ -39,8 +39,9 @@ GiantRobot.meta.relation = {
                         url: ajaxurl,
                         type: 'POST',
                         data: {
-                            ps: query,
-                            action: 'giant_find_posts',
+                            s: query,
+                            action: 'giant_meta_find_related',
+                            mode: $instance.data('mode'),
                             filter: $instance.data('filter'),
                             _wpnonce: $instance.data('token')
                         },

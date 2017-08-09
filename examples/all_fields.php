@@ -55,10 +55,20 @@ return array(
             'two' => 'Two',
         ],
     ]),
-    new Relation('relation_meta', [
+    new Relation('relation_to_post_meta', [
         'label' => 'Relation',
-        'description' => 'It\'s better together.',
-        'post_type' => 'post',
+        'description' => 'Let\'s relate to posts.',
+        'post_type' => ['post', 'page'],
+    ]),
+    new Relation('relation_to_user_meta', [
+        'label' => 'User Relation',
+        'description' => 'Let\'s relate to users.',
+        'user_role' => ['author'],
+    ]),
+    new Relation('relation_to_term_meta', [
+        'label' => 'Term Relation',
+        'description' => 'Let\'s relate to terms.',
+        'taxonomy' => 'any',
     ]),
     new Repeater('repeater_meta', [
         'label' => 'Repeater',
