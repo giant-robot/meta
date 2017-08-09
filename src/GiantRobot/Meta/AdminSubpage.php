@@ -34,6 +34,8 @@ class AdminSubpage extends AdminPage
             return;
         }
 
+        $this->parent->register();
+
         add_action('admin_menu', function () {
             $this->screenId = add_submenu_page(
                 $this->parent->slug,
