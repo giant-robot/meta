@@ -7,7 +7,7 @@
  * @var array  $values
  */
 ?>
-<div class="gnt-meta-repeater gnt-meta-repeater--<?= $layout ?>">
+<div class="gnt-meta-repeater gnt-meta-repeater--<?= $layout ?>" data-id="<?php echo esc_attr($id) ?>">
 
     <template class="gnt-meta-repeater__row-template">
         <div class="gnt-meta-repeater__row">

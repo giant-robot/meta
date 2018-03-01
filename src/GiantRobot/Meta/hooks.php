@@ -1,87 +1,125 @@
 <?php
-add_action('wp_ajax_giant_meta_find_related', function () {
+/**
+ * Register an AJAX action that fetches post/user/term suggestions for the
+ * Relation field.
+ *
+ * This action is not available to "non-privileged" users.
+ */
+add_action('wp_ajax_giant_meta_relation_suggestions', function () {
 
     check_admin_referer('giant|meta|relate');
 
-    $s = isset($_POST['s']) ? wp_unslash($_POST['s']) : '';
-    $mode = isset($_POST['mode']) ? $_POST['mode'] : '';
-    $filter = isset($_POST['filter']) ? $_POST['filter'] : '';
-    $results = array();
+    $mode = isset($_REQUEST['mode']) ? $_REQUEST['mode'] : '';
+    $search = isset($_REQUEST['s']) ? wp_unslash($_REQUEST['s']) : '';
+    $filter = isset($_REQUEST['filter']) ? explode(',', $_REQUEST['filter']) : [];
+    $offset = isset($_REQUEST['offset']) ? intval($_REQUEST['offset']) : 0;
+    $limit = isset($_REQUEST['limit']) ? intval($_REQUEST['limit']) : 100;
+    $items = array();
+    $count = 0;
 
     if ($mode === 'post')
     {
-        $postType = empty($filter) ? 'any' : (is_array($filter) ? $filter : explode(',', $filter));
+        // Save a million seconds in query times by hooking this callback to the
+        // post_search filter. That will have WP only searching in post titles.
+        // Remove right after the query is performed to avoid screwing up the
+        // search logic of the rest of the system.
+        $searchOnlyPostTitles = function ($whereClauseSql, WP_Query $query) {
 
-        $args = array(
-            'post_type' => $postType,
+            global $wpdb;
+            $terms = isset($query->query_vars['search_terms']) ? $query->query_vars['search_terms'] : array();
+            $parts = array();
+
+            foreach ($terms as $term)
+            {
+                $parts[] = $wpdb->prepare(
+                    "$wpdb->posts.post_title LIKE %s",
+                    '%' . $wpdb->esc_like($term) . '%'
+                );
+            }
+
+            if ($parts)
+            {
+                $whereClauseSql = ' AND (' . implode(' OR ', $parts) . ') ';
+            }
+
+            return $whereClauseSql;
+        };
+
+        add_filter('posts_search', $searchOnlyPostTitles, 10, 2);
+
+        $postQuery = new WP_Query([
+            'post_type' => $filter ?: 'any',
+            's' => $search,
             'post_status' => 'any',
-            'posts_per_page' => 50,
-        );
+            'offset' => $offset,
+            'posts_per_page' => $limit,
+        ]);
 
-        if ($s)
-        {
-            $args['s'] = $s;
-        }
+        // Remembered to remove the filter in time! Yay!
+        remove_filter('posts_search', $searchOnlyPostTitles, 10);
 
-        $results = array_map(function (\WP_Post $post) {
-            return (object) [
+        $items = array_map(function (WP_Post $post) {
+            return array(
                 'id' => $post->ID,
                 'title' => $post->post_title,
-            ];
-        }, get_posts($args));
+            );
+        }, $postQuery->posts);
+
+        $count = $postQuery->found_posts;
     }
     elseif ($mode === 'user')
     {
-        $args = array(
-            'number' => 50,
-        );
+        $userQuery = new WP_User_Query([
+            'role__in' => $filter === ['any'] ? [] : $filter,
+            'search' => "*$search*",
+            'search_columns' => ['display_name', 'user_email'],
+            'offset' => $offset,
+            'number' => $limit,
+        ]);
 
-        if ($filter && $filter !== 'any')
-        {
-            $args['role__in'] = is_array($filter) ? $filter : explode(',', $filter);
-        }
-
-        if ($s)
-        {
-            $args['search'] = $s;
-        }
-
-        $results = array_map(function (\WP_User $user) {
-            return (object) [
+        $items = array_map(function (WP_User $user) {
+            return array(
                 'id' => $user->ID,
-                'title' => $user->display_name,
-            ];
-        }, get_users($args));
+                'title' => "$user->display_name ($user->user_email)",
+            );
+        }, $userQuery->get_results());
+
+        $count = $userQuery->get_total();
     }
     elseif ($mode === 'term')
     {
-        $args = array(
-            'number' => 50,
-        );
+        $termQuery = new WP_Term_Query([
+            'taxonomy' => $filter === array('any') ? array() : $filter,
+            'name__like' => $search,
+            'offset' => $offset,
+            'number' => $limit,
+        ]);
 
-        if ($filter && $filter !== 'any')
-        {
-            $args['taxonomy'] = is_array($filter) ? $filter : explode(',', $filter);
-        }
+        // Yep! WP_Term_Query does NOT return the total amount of terms found.
+        $termCountQuery = new WP_Term_Query([
+            'taxonomy' => $filter === array('any') ? array() : $filter,
+            'name__like' => $search,
+            'fields' => 'count',
+            'count' => true,
+        ]);
 
-        if ($s)
-        {
-            $args['name__like'] = $s;
-        }
-
-        $results = array_map(function (\WP_Term $term) {
-            return (object) [
+        $items = array_map(function (WP_Term $term) {
+            return array(
                 'id' => $term->term_taxonomy_id,
                 'title' => $term->name,
-            ];
-        }, get_terms($args));
+            );
+        }, $termQuery->terms);
+
+        // Isn't this the most counter-intuitive way to do this?
+        $count = $termCountQuery->get_terms();
     }
     else
     {
         wp_send_json_error();
     }
 
-
-
-    wp_send_json_success($results);
+    wp_send_json_success([
+        'items' => $items,
+        'count' => $count,
+    ]);
 });

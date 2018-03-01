@@ -59,6 +59,7 @@ return array(
         'label' => 'Relation',
         'description' => 'Let\'s relate to posts.',
         'post_type' => ['post', 'page'],
+        'multi' => true,
     ]),
     new Relation('relation_to_user_meta', [
         'label' => 'User Relation',
@@ -93,6 +94,7 @@ return array(
             new Relation('relation', [
                 'label' => 'Relation',
                 'description' => 'Better together',
+                'multi' => true,
             ]),
         ],
     ]),

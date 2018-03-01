@@ -82,11 +82,27 @@ GiantRobot.meta.repeater = {
             var $this  = jQuery(this);
             var $input = $this.find(':input');
 
-            // Refactor field input name so that all fields are
+            // Some fields have templates and those templates have input fields.
+            // We need to work on them as well.
+            var $templateTag = $this.find('script[type="text/html"]');
+            var $template = jQuery($templateTag.text());
+            var $templateInput = $template.find(':input');
+
+            // Refactor field input names so that all fields are
             // submitted in the name of the repeater.
-            var name    = $input.attr('name');
-            var newname = name.replace('[]', '[' + id + ']');
-            $input.attr('name', newname);
+            $input.add($templateInput).each(function () {
+                var $in = jQuery(this);
+                var name = $in.attr('name');
+
+                if (name)
+                {
+                    var newname = name.replace('[' + $instance.data('id') + '][]', '[' + $instance.data('id') + '][' + id + ']');
+                    $in.attr('name', newname);
+                }
+            });
+
+            // Replace the template!
+            $templateTag.text(jQuery('<div>').append($template).html());
 
             // Attach field-specific JS.
             var fieldType = jQuery(this).data('type');

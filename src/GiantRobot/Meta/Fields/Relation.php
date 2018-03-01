@@ -22,7 +22,25 @@ class Relation extends Field
      */
     protected function sanitizeDefault($value)
     {
-        return $value;
+        $sanitized = null;
+
+        if (! $value || ! is_array($value))
+        {
+            return $sanitized;
+        }
+
+        if ($this->options('multi'))
+        {
+            $sanitized = array_filter(array_map(function ($value) {
+                return intval($value) ?: null;
+            }, $value));
+        }
+        else
+        {
+            $sanitized = intval(array_shift($value)) ?: null;
+        }
+
+        return $sanitized;
     }
 
     /**
@@ -50,20 +68,36 @@ class Relation extends Field
         {
             $mode = 'user';
 
-            foreach ($values as $id)
+            foreach ($values as $key => $id)
             {
                 $user = get_userdata($id);
-                $titles[$id] = $user ? $user->display_name : '';
+
+                if (! $user)
+                {
+                    unset($values[$key]);
+                }
+                else
+                {
+                    $titles[$id] = "$user->display_name ($user->user_email)";
+                }
             }
         }
         elseif ($filter = $this->options('taxonomy'))
         {
             $mode = 'term';
 
-            foreach ($values as $id)
+            foreach ($values as $key => $id)
             {
                 $term = get_term_by('term_taxonomy_id', $id);
-                $titles[$id] = $term ? $term->name : '';
+
+                if (! $term)
+                {
+                    unset($values[$key]);
+                }
+                else
+                {
+                    $titles[$id] = $term->name;
+                }
             }
         }
         else
@@ -71,18 +105,28 @@ class Relation extends Field
             $filter = $this->options('post_type', 'any');
             $mode = 'post';
 
-            foreach ($values as $id)
+            foreach ($values as $key => $id)
             {
-                $titles[$id] = get_the_title($id);
+                $post = get_post($id);
+
+                if (! $post)
+                {
+                    unset($values[$key]);
+                }
+                else
+                {
+                    $titles[$id] = $post->post_title;
+                }
             }
         }
 
         return [
-            'values' => $values,
+            'values' => array_values($values),
             'titles' => $titles,
             'mode' => $mode,
             'filter' => is_array($filter) ? implode(',', $filter) : $filter,
-            'token' => wp_create_nonce('giant|meta|relate')
+            'token' => wp_create_nonce('giant|meta|relate'),
+            'multi' => $this->options('multi', false),
         ];
     }
 }
