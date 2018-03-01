@@ -192,7 +192,7 @@ If you want all options in the group to be saved in a single option, you can spe
 <a name="admin-pages"></a>
 # Admin Pages
 
-You can define new WP admin pages and subpages so that [OptionFields](#options-group) groups can be added to them.
+You can define new WP admin pages and subpages to use as `locations` for [OptionFields](#options-group) groups.
 
 
 <a name="admin-page"></a>
