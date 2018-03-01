@@ -6,18 +6,18 @@
 spl_autoload_register(function ($class) {
 
     $ns = "GiantRobot\\Meta";
-    $src = __DIR__ . '/src/';
+    $src = __DIR__ . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR;
 
     if (0 !== strpos($class, $ns))
     {
-        return null;
+        return false;
     }
 
     $file = $src . str_replace('\\', DIRECTORY_SEPARATOR, $class) . '.php';
 
     if (! file_exists($file) || ! is_readable($file))
     {
-        return null;
+        return false;
     }
 
     require $file;
