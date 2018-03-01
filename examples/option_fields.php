@@ -11,5 +11,5 @@ $locations = array($page, $subPage);
 $fields = include "all_fields.php";
 $options = array();
 
-$postFields = new OptionFields($title, $locations, $fields, $options);
-$postFields->register();
+$optionFields = new OptionFields($title, $locations, $fields, $options);
+$optionFields->register();

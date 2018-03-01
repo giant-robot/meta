@@ -6,5 +6,5 @@ $locations = array('category');
 $fields = include "all_fields.php";
 $options = array();
 
-$postFields = new TermFields($title, $locations, $fields, $options);
-$postFields->register();
+$termFields = new TermFields($title, $locations, $fields, $options);
+$termFields->register();
