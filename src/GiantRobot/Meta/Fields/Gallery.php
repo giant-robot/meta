@@ -16,22 +16,30 @@ class Gallery extends Field
     /**
      * Default sanitization method, used when the sanitize option is not set.
      *
-     * @param mixed $values
+     * @param array $values
      *
-     * @return array|null
+     * @return int[]|null
      */
     protected function sanitizeDefault($values)
     {
-        if (! $values)
+        // Input should always be an array.
+        // If not, somebody's been monkeying around with it.
+        if (! is_array($values))
         {
             return null;
         }
 
-        $sanitized = array_map(function($value) {
-            return sanitize_text_field($value);
-        }, $values);
+        $sanitizeOne = function ($value) {
 
-        return array_values($sanitized);
+            if (is_numeric($value) && $value > 0 && intval($value) == $value)
+            {
+                return intval($value);
+            }
+
+            return null;
+        };
+
+        return array_filter(array_map($sanitizeOne, $values));
     }
 
     /**
