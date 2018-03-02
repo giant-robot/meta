@@ -16,15 +16,22 @@ class Repeater extends Field
     /**
      * Default sanitization method, used when the sanitize option is not set.
      *
-     * @param mixed $values
+     * @param array $values
      *
      * @return array|null
      */
     protected function sanitizeDefault($values)
     {
+        // Input should always be an array.
+        // If not, somebody's been monkeying around with it.
+        if (! is_array($values))
+        {
+            return null;
+        }
+
         if (! $values)
         {
-            return '';
+            return null;
         }
 
         /* @var Field[] $fields */
