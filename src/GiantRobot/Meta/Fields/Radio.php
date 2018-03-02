@@ -18,11 +18,13 @@ class Radio extends Field
      *
      * @param mixed $value
      *
-     * @return string
+     * @return string|null
      */
     protected function sanitizeDefault($value)
     {
-        return sanitize_text_field($value);
+        $choices = $this->options('choices', []);
+
+        return array_key_exists($value, $choices) ? sanitize_text_field($value) : null;
     }
 
     /**
