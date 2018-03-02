@@ -53,6 +53,7 @@ class Relation extends Field
     protected function viewData($value = null)
     {
         $values = $value;
+        $choices = array();
         $titles = array();
 
         if (! $value)
@@ -67,61 +68,55 @@ class Relation extends Field
         if ($filter = $this->options('user_role'))
         {
             $mode = 'user';
+            $users = get_users([
+                'include' => $values ?: [0],
+                'number' => -1,
+                'orderby' => 'include',
+            ]);
 
-            foreach ($values as $key => $id)
+            /* @var \WP_User[] $users */
+            foreach ($users as $user)
             {
-                $user = get_userdata($id);
-
-                if (! $user)
-                {
-                    unset($values[$key]);
-                }
-                else
-                {
-                    $titles[$id] = "$user->display_name ($user->user_email)";
-                }
+                $choices[] = $user->ID;
+                $titles[$user->ID] = "$user->display_name ($user->user_email)";
             }
         }
         elseif ($filter = $this->options('taxonomy'))
         {
             $mode = 'term';
+            $terms = get_terms([
+                'term_taxonomy_id' => $values ?: [0],
+                // TODO: Sort results in the same order they're passed to term_taxonomy_id.
+            ]);
 
-            foreach ($values as $key => $id)
+            /* @var \WP_Term[] $terms */
+            foreach ($terms as $term)
             {
-                $term = get_term_by('term_taxonomy_id', $id);
-
-                if (! $term)
-                {
-                    unset($values[$key]);
-                }
-                else
-                {
-                    $titles[$id] = $term->name;
-                }
+                $choices[] = $term->term_taxonomy_id;
+                $titles[$term->term_taxonomy_id] = $term->name;
             }
         }
         else
         {
             $filter = $this->options('post_type', 'any');
             $mode = 'post';
+            $posts = get_posts([
+                'post_type' => $filter,
+                'include' => $values ?: [0],
+                'numberposts' => -1,
+                'orderby' => 'post__in',
+            ]);
 
-            foreach ($values as $key => $id)
+            /* @var \WP_Post[] $posts */
+            foreach ($posts as $post)
             {
-                $post = get_post($id);
-
-                if (! $post)
-                {
-                    unset($values[$key]);
-                }
-                else
-                {
-                    $titles[$id] = $post->post_title;
-                }
+                $choices[] = $post->ID;
+                $titles[$post->ID] = $post->post_title;
             }
         }
 
         return [
-            'values' => array_values($values),
+            'values' => $choices,
             'titles' => $titles,
             'mode' => $mode,
             'filter' => is_array($filter) ? implode(',', $filter) : $filter,
