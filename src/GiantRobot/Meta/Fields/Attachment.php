@@ -22,7 +22,12 @@ class Attachment extends Field
      */
     protected function sanitizeDefault($value)
     {
-        return sanitize_text_field($value);
+        if (is_numeric($value) && $value > 0 && intval($value) == $value)
+        {
+            return intval($value);
+        }
+
+        return null;
     }
 
     /**
