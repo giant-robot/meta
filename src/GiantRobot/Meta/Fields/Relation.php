@@ -16,17 +16,17 @@ class Relation extends Field
     /**
      * Default sanitization method, used when the sanitize option is not set.
      *
-     * @param mixed $value
+     * @param array $value
      *
-     * @return mixed
+     * @return int|int[]|null
      */
     protected function sanitizeDefault($value)
     {
-        $sanitized = null;
-
-        if (! $value || ! is_array($value))
+        // Input should always be an array.
+        // If not, somebody's been monkeying around with it.
+        if (! is_array($value))
         {
-            return $sanitized;
+            return null;
         }
 
         if ($this->options('multi'))
