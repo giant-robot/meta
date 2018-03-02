@@ -258,7 +258,7 @@ $field = new \GiantRobot\Meta\Fields\Text(string $id [, array $options = array()
 ### Parameters
 
 `$id`  
-A unique identifier for the field. This is going to be the meta key under which the field input will be saved.
+A unique identifier for the field. This is going to be the meta key (or option name) under which the field input will be saved.
 
 <a name="common-field-options"></a>
 `$options`   
