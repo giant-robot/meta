@@ -29,15 +29,23 @@ class Relation extends Field
             return null;
         }
 
+        $sanitizeOne = function ($value) {
+
+            if (is_numeric($value) && $value > 0 && intval($value) == $value)
+            {
+                return intval($value);
+            }
+
+            return null;
+        };
+
         if ($this->options('multi'))
         {
-            $sanitized = array_filter(array_map(function ($value) {
-                return intval($value) ?: null;
-            }, $value));
+            $sanitized = array_filter(array_map($sanitizeOne, $value));
         }
         else
         {
-            $sanitized = intval(array_shift($value)) ?: null;
+            $sanitized = $sanitizeOne(array_shift($value));
         }
 
         return $sanitized;
