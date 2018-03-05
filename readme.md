@@ -452,7 +452,7 @@ you can also define the following options to affect how the Select field behaves
 **choices** *(string)* `Default: []`  
 An associative array representing the list of available choices. The array's keys are the values that are actually saved.  
 
-**multi** *(string)* `Default: 'false'`  
+**multi** *(bool)* `Default: false`  
 Whether the user will be allowed to make more than one choice.
 
 
