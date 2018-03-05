@@ -299,7 +299,7 @@ $field = new \GiantRobot\Meta\Fields\Checkbox(string $id [, array $options = arr
 In addition to the [common options](#common-field-options) that are available to all fields,
 you can also define the following options to affect how the Checkbox field behaves.
 
-**choices** *(string)* `Default: []`  
+**choices** *(array)* `Default: []`  
 An associative array representing the list of available options. The array's keys are the values that are actually saved.  
 
 **layout** *(string)* `Default: 'vertical'`  
@@ -388,7 +388,7 @@ $field = new \GiantRobot\Meta\Fields\Radio(string $id [, array $options = array(
 In addition to the [common options](#common-field-options) that are available to all fields,
 you can also define the following options to affect how the Radio field behaves.
 
-**choices** *(string)* `Default: []`  
+**choices** *(array)* `Default: []`  
 An associative array representing the list of available options. The array's keys are the values that are actually saved.  
 
 **layout** *(string)* `Default: 'horizontal'`  
@@ -449,10 +449,10 @@ $field = new \GiantRobot\Meta\Fields\Select(string $id [, array $options = array
 In addition to the [common options](#common-field-options) that are available to all fields,
 you can also define the following options to affect how the Select field behaves.
 
-**choices** *(string)* `Default: []`  
+**choices** *(array)* `Default: []`  
 An associative array representing the list of available choices. The array's keys are the values that are actually saved.  
 
-**multi** *(string)* `Default: 'false'`  
+**multi** *(bool)* `Default: false`  
 Whether the user will be allowed to make more than one choice.
 
 
