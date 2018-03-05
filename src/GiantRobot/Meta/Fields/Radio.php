@@ -37,7 +37,8 @@ class Radio extends Field
     protected function viewData($value = null)
     {
         return [
-            'choices' => $this->options('choices', [])
+            'choices' => $this->options('choices', []),
+            'layout' => $this->options('layout', 'horizontal'),
         ];
     }
 }

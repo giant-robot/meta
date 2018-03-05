@@ -371,8 +371,9 @@ you can also define the following options to affect how the Radio field behaves.
 
 **choices** *(string)* `Default: []`  
 An associative array representing the list of available options. The array's keys are the values that are actually saved.  
-For example, the following would render a radio control to select gender.
 
+**layout** *(string)* `Default: 'horizontal'`  
+The layout for the list of options. Supported values are `horizontal` and `vertical`.
 
 <a name="relation-field"></a>
 ## Relation Field
