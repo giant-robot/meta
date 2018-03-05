@@ -77,6 +77,7 @@ That wasn't too bad, was it?
 	* [AdminSubpage](#admin-subpage)
 * [Fields](#fields)
 	* [Attachment](#attachment-field)
+	* [Checkbox](#checkbox-field)
 	* [DateTime](#datetime-field)
 	* [Gallery](#gallery-field)
 	* [Location](#location-field)
@@ -84,6 +85,7 @@ That wasn't too bad, was it?
 	* [Radio](#radio-field)
 	* [Relation](#relation-field)
 	* [Repeater](#repeater-field)
+	* [Select](#select-field)
 	* [Text](#text-field)
 	* [Textarea](#textarea-field)
 
@@ -287,6 +289,23 @@ $field = new \GiantRobot\Meta\Fields\Attachment(string $id [, array $options = a
 The Attachment field does not support any additional options. See [common options](#common-field-options) available to all fields.
 
 
+<a name="checkbox-field"></a>
+## Checkbox Field
+
+```php
+$field = new \GiantRobot\Meta\Fields\Checkbox(string $id [, array $options = array()]);
+```
+
+In addition to the [common options](#common-field-options) that are available to all fields,
+you can also define the following options to affect how the Checkbox field behaves.
+
+**choices** *(string)* `Default: []`  
+An associative array representing the list of available options. The array's keys are the values that are actually saved.  
+
+**layout** *(string)* `Default: 'vertical'`  
+The layout for the list of options. Supported values are `horizontal` and `vertical`.
+
+
 <a name="datetime-field"></a>
 ## DateTime Field
 
@@ -375,6 +394,7 @@ An associative array representing the list of available options. The array's key
 **layout** *(string)* `Default: 'horizontal'`  
 The layout for the list of options. Supported values are `horizontal` and `vertical`.
 
+
 <a name="relation-field"></a>
 ## Relation Field
 
@@ -401,6 +421,7 @@ Note: If none of the above options is set, the field defaults to *post mode*.
 **multi** *(bool)* `Default: false`  
 Whether to allow the user to make multiple selections.
 
+
 <a name="repeater-field"></a>
 ## Repeater Field
 
@@ -416,6 +437,24 @@ An array of Fields to include with each repeated row.
 
 **layout** *(string)* `Default: 'table'`  
 The layout of each repeated row. Supported values are `table` and `lines`.
+
+
+<a name="select-field"></a>
+## Select Field
+
+```php
+$field = new \GiantRobot\Meta\Fields\Select(string $id [, array $options = array()]);
+```
+
+In addition to the [common options](#common-field-options) that are available to all fields,
+you can also define the following options to affect how the Select field behaves.
+
+**choices** *(string)* `Default: []`  
+An associative array representing the list of available choices. The array's keys are the values that are actually saved.  
+
+**multi** *(string)* `Default: 'false'`  
+Whether the user will be allowed to make more than one choice.
+
 
 <a name="text-field"></a>
 ## Text Field

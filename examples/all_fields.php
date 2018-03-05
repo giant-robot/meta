@@ -5,6 +5,7 @@
  * This list is meant to be exhaustive.
  */
 use GiantRobot\Meta\Fields\Attachment;
+use GiantRobot\Meta\Fields\Checkbox;
 use GiantRobot\Meta\Fields\DateTime;
 use GiantRobot\Meta\Fields\Gallery;
 use GiantRobot\Meta\Fields\Location;
@@ -12,6 +13,7 @@ use GiantRobot\Meta\Fields\Message;
 use GiantRobot\Meta\Fields\Radio;
 use GiantRobot\Meta\Fields\Relation;
 use GiantRobot\Meta\Fields\Repeater;
+use GiantRobot\Meta\Fields\Select;
 use GiantRobot\Meta\Fields\Text;
 use GiantRobot\Meta\Fields\Textarea;
 
@@ -19,6 +21,19 @@ return array(
     new Attachment('file_meta', [
         'label' => 'Attachment',
         'description' => 'Will launch a media gallery modal.',
+    ]),
+    new Checkbox('single_checkbox_meta', [
+        'label' => 'Solo Checkbox',
+        'choices' => [
+            'one' => 'One',
+        ],
+    ]),
+    new Checkbox('multi_checkbox_meta', [
+        'label' => 'Checkbox Farm',
+        'choices' => [
+            'one' => 'One',
+            'two' => 'Two',
+        ],
     ]),
     new DateTime('datetime_meta', [
         'label' => 'Date & Time',
@@ -80,6 +95,19 @@ return array(
                 'label' => 'Plain old text field',
                 'description' => 'For those who enjoy typing.',
             ]),
+            new Checkbox('single_checkbox_meta', [
+                'label' => 'Solo Checkbox',
+                'choices' => [
+                    'one' => 'One',
+                ],
+            ]),
+            new Checkbox('multi_checkbox_meta', [
+                'label' => 'Checkbox Farm',
+                'choices' => [
+                    'one' => 'One',
+                    'two' => 'Two',
+                ],
+            ]),
             new Radio('radio', [
                 'label' => 'El Radio',
                 'choices' => [
@@ -97,6 +125,25 @@ return array(
                 'multi' => true,
             ]),
         ],
+    ]),
+    new Select('single_select_meta', [
+        'label' => 'Single Select',
+        'description' => 'Pick a card.',
+        'choices' => [
+            'jack' => 'Jack',
+            'ace' => 'Ace',
+        ],
+    ]),
+    new Select('multi_select_meta', [
+        'label' => 'Multi Select',
+        'description' => 'Make a band.',
+        'choices' => [
+            'page' => 'Page',
+            'plant' => 'Plant',
+            'jones' => 'Jones',
+            'bonham' => 'Bonham',
+        ],
+        'multi' => true,
     ]),
     new Text('text_meta', [
         'label' => 'Plain old text field',
